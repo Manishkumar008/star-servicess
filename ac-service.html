@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC Services - Star Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Star Services - Home Decor & AC</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; scroll-behavior: smooth; overflow-x: hidden; }
+        .heading-font { font-family: 'Playfair Display', serif; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        
+        .premium-card { 
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .premium-card:hover { 
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.1);
+            border-color: #4f46e5;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(-45deg, #1e1b4b, #312e81, #1e1b4b, #4338ca);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #quick-cart {
+            box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+            border-left: 1px solid #e2e8f0;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 10px; }
+        
+        .quick-item-card {
+            background: #fff; border: 1px solid #f1f5f9;
+            padding: 1.25rem; border-radius: 1.5rem; transition: 0.2s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between h-20 items-center">
+            <div class="heading-font text-2xl font-bold text-gray-900 tracking-tight">
+                Star <span class="text-indigo-600 font-normal italic"> Services</span>
+            </div>
+            <ul class="hidden lg:flex gap-10 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-600">
+                <li><a href="index.html" class="hover:text-indigo-600 transition">Home</a></li>
+                <li><a href="home-decor.html" class="hover:text-indigo-600 transition">Home Decor</a></li>
+                <li><a href="index.html#contact" class="hover:text-indigo-600 transition">Contact</a></li>
+            </ul>
+            <div class="flex items-center gap-6">
+                <button onclick="toggleQuickCart(true)" class="relative p-2 text-gray-800">
+                    <i class="fa-solid fa-bag-shopping text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-indigo-600 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero-gradient relative pt-56 pb-32 text-center px-4 overflow-hidden text-white">
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <span class="text-xs uppercase tracking-[0.6em] font-bold mb-4 block text-indigo-300">Fast • Reliable • Professional</span>
+            <h1 class="text-5xl md:text-8xl heading-font mb-6 leading-none">Cooling <br> Perfected.</h1>
+            <p class="text-indigo-100 text-sm md:text-lg max-w-xl mx-auto opacity-80 mb-10">Professional AC maintenance starting at ₹400.</p>
+        </div>
+    </section>
+
+    <!-- NORMAL SERVICES GRID -->
+    <section class="py-24 max-w-7xl mx-auto px-6">
+        <div class="mb-16">
+            <h2 class="text-4xl heading-font text-gray-900">Normal AC Service</h2>
+            <div class="w-16 h-1 bg-indigo-600 mt-4"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Window Normal -->
+            <div class="premium-card bg-white rounded-[3rem] p-4 flex flex-col">
+                <div class="relative rounded-[2.5rem] overflow-hidden h-64 mb-6">
+                    <img src="images/windowacnormal.png.png" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-2 rounded-2xl font-black text-gray-900 shadow-sm italic">₹400</div>
+                </div>
+                <div class="px-4 pb-4 text-center">
+                    <h3 class="text-xl font-bold text-gray-900 uppercase mb-2">Window AC</h3>
+                    <p class="text-gray-400 text-xs mb-6 italic">Normal Jet Service</p>
+                    <button onclick="handleBooking('Window AC Normal Service', 400)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl">Book Service</button>
+                </div>
+            </div>
+
+            <!-- Split Normal -->
+            <div class="premium-card bg-white rounded-[3rem] p-4 flex flex-col">
+                <div class="relative rounded-[2.5rem] overflow-hidden h-64 mb-6">
+                    <img src="images/splitacnormal.png.png" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-2 rounded-2xl font-black text-gray-900 shadow-sm italic">₹500</div>
+                </div>
+                <div class="px-4 pb-4 text-center">
+                    <h3 class="text-xl font-bold text-gray-900 uppercase mb-2">Split AC</h3>
+                    <p class="text-gray-400 text-xs mb-6 italic">Normal Jet Service</p>
+                    <button onclick="handleBooking('Split AC Normal Service', 500)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl">Book Service</button>
+                </div>
+            </div>
+
+            <!-- Repair + Gas -->
+            <div class="premium-card bg-white rounded-[3rem] p-4 flex flex-col">
+                <div class="relative rounded-[2.5rem] overflow-hidden h-64 mb-6">
+                    <img src="images/gastopup.png.png" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-2 rounded-2xl font-black text-gray-900 shadow-sm italic">₹3500</div>
+                </div>
+                <div class="px-4 pb-4 text-center">
+                    <h3 class="text-xl font-bold text-gray-900 uppercase mb-2">Repair + Gas</h3>
+                    <p class="text-gray-400 text-xs mb-6 italic">Complete Solution</p>
+                    <button onclick="handleBooking('Repair + Gas Filling', 3500)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl">Book Now</button>
+                </div>
+            </div>
+
+            <!-- Gas Topup -->
+            <div class="premium-card bg-white rounded-[3rem] p-4 flex flex-col">
+                <div class="relative rounded-[2.5rem] overflow-hidden h-64 mb-6">
+                    <img src="images/topup.png.png" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-2 rounded-2xl font-black text-gray-900 shadow-sm italic">₹3000</div>
+                </div>
+                <div class="px-4 pb-4 text-center">
+                    <h3 class="text-xl font-bold text-gray-900 uppercase mb-2">Gas Topup</h3>
+                    <p class="text-gray-400 text-xs mb-6 italic">Refill Service</p>
+                    <button onclick="handleBooking('Gas Top Up', 3000)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl">Book Now</button>
+                </div>
+            </div>
+
+            <!-- Split AC Installation -->
+            <div class="premium-card bg-white rounded-[3rem] p-4 flex flex-col">
+                <div class="relative rounded-[2.5rem] overflow-hidden h-64 mb-6">
+                    <img src="images/splitacinstallation.png.png" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-2 rounded-2xl font-black text-gray-900 shadow-sm italic">₹1500</div>
+                </div>
+                <div class="px-4 pb-4 text-center">
+                    <h3 class="text-xl font-bold text-gray-900 uppercase mb-2">Split AC Installation</h3>
+                    <p class="text-gray-400 text-xs mb-6 italic">split AC Installation</p>
+                    <button onclick="handleBooking('Split AC Installation', 1500)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl">Book Now</button>
+                </div>
+            </div>
+
+            <!-- Window AC Installation -->
+
+            <div class="premium-card bg-white rounded-[3rem] p-4 flex flex-col">
+                <div class="relative rounded-[2.5rem] overflow-hidden h-64 mb-6">
+                    <img src="images/windowacinstall.png.png" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-2 rounded-2xl font-black text-gray-900 shadow-sm italic">₹1300</div>
+                </div>
+                <div class="px-4 pb-4 text-center">
+                    <h3 class="text-xl font-bold text-gray-900 uppercase mb-2">Window AC Installation</h3>
+                    <p class="text-gray-400 text-xs mb-6 italic">Window AC Installation</p>
+                    <button onclick="handleBooking('Window AC Installation', 1300)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl">Book Now</button>
+                </div>
+            </div>
+
+            <!-- Window AC+split ac  Uninstallation -->
+
+            <div class="premium-card bg-white rounded-[3rem] p-4 flex flex-col">
+                <div class="relative rounded-[2.5rem] overflow-hidden h-64 mb-6">
+                    <img src="images/split+window.png.png" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-2 rounded-2xl font-black text-gray-900 shadow-sm italic">₹500</div>
+                </div>
+                <div class="px-4 pb-4 text-center">
+                    <h3 class="text-xl font-bold text-gray-900 uppercase mb-2">Window AC & Split Ac Uninstallation</h3>
+                    <p class="text-gray-400 text-xs mb-6 italic">Window AC & Split Ac Uninstallation</p>
+                    <button onclick="handleBooking('Window AC Uninstallation', 500)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl">Book Now</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PREMIUM FOAM SECTION -->
+    <section class="py-24 bg-gray-900 overflow-hidden relative">
+        <i class="fa-solid fa-snowflake absolute top-0 -right-20 text-[30rem] text-white/5 rotate-12"></i>
+        <div class="max-w-7xl mx-auto px-6 relative z-10 text-white">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl heading-font">Premium Foam AC Service</h2>
+                <p class="text-indigo-400 font-bold text-xs uppercase tracking-[0.4em] mt-4">Advanced Power Jet Cleaning</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="premium-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[4rem] p-8 flex flex-col md:flex-row gap-8 items-center">
+                    <img src="images/windowfoamservice.png.png" class="w-64 h-64 rounded-[3rem] object-cover">
+                    <div class="flex-grow text-center md:text-left">
+                        <h3 class="text-3xl font-bold mb-2 uppercase">Window AC</h3>
+                        <p class="text-indigo-400 font-bold italic mb-6">Premium Foam Treatment</p>
+                        <div class="text-4xl font-black mb-8 italic">₹450</div>
+                        <button onclick="handleBooking('Window AC Premium Foam Service', 450)" class="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-white hover:text-gray-900 transition shadow-xl">Book Premium</button>
+                    </div>
+                </div>
+                <div class="premium-card bg-white/5 backdrop-blur-xl border border-white/10 rounded-[4rem] p-8 flex flex-col md:flex-row gap-8 items-center">
+                    <img src="images/splitacfoamservice.png.png" class="w-64 h-64 rounded-[3rem] object-cover">
+                    <div class="flex-grow text-center md:text-left">
+                        <h3 class="text-3xl font-bold mb-2 uppercase">Split AC</h3>
+                        <p class="text-indigo-400 font-bold italic mb-6">Premium Foam Treatment</p>
+                        <div class="text-4xl font-black mb-8 italic">₹550</div>
+                        <button onclick="handleBooking('Split AC Premium Foam Service', 550)" class="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-white hover:text-gray-900 transition shadow-xl">Book Premium</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUICK CART DRAWER (Non-Blocking) -->
+    <div id="quick-cart" class="fixed top-0 right-0 h-full w-80 bg-white z-[60] transform translate-x-full transition-transform duration-500 flex flex-col">
+        <div class="p-6 border-b flex justify-between items-center bg-gray-900 text-white">
+            <div>
+                <h3 class="font-bold text-lg heading-font text-white">Selected Services</h3>
+                <p id="drawer-count" class="text-[9px] uppercase tracking-widest opacity-60">0 Services</p>
+            </div>
+            <button onclick="toggleQuickCart(false)" class="hover:rotate-90 transition-transform"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div id="quick-cart-items" class="flex-grow overflow-y-auto p-4 space-y-4 custom-scrollbar bg-slate-50"></div>
+        <div class="p-6 border-t bg-white shadow-lg">
+            <div class="flex justify-between mb-4">
+                <span class="text-gray-400 font-bold text-[10px] uppercase">Total Estimate</span>
+                <span id="quick-total" class="font-black text-indigo-600 text-lg">₹0</span>
+            </div>
+            <a href="checkout.html" class="block w-full bg-indigo-600 text-white text-center py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-gray-900 transition shadow-xl">Checkout Now</a>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t pt-20 pb-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            
+            <div class="space-y-6">
+                <p class="heading-font text-3xl font-bold text-gray-900">Star <span class="text-indigo-600 italic">Services</span></p>
+                <p class="text-sm text-gray-500 leading-relaxed font-medium">
+                    Transforming spaces with elegance since 2016. We specialize in custom-stitched curtains and tailored decor solutions for your dream home.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Explore</h4>
+                <ul class="space-y-4 text-sm font-bold text-gray-500">
+                    <li><a href="index.html" class="hover:text-indigo-600 transition">Home</a></li>
+                    <li><a href="ac-service.html" class="hover:text-indigo-600 transition">AC Services</a></li>
+                    <li><a href="home-decor.html" class="hover:text-indigo-600 transition">Home Decor</a></li>
+                    <li><a href="#contact" class="hover:text-indigo-600 transition">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Decor Catalog</h4>
+                <ul class="space-y-4 text-sm font-bold text-gray-500">
+                    <li><a href="curtains.html" class="hover:text-indigo-600 transition">Premium Curtains</a></li>
+                    <li><a href="blinds.html" class="hover:text-indigo-600 transition">Modern Blinds</a></li>
+                    <li><a href="wallpaper.html" class="hover:text-indigo-600 transition">3D Wallpapers</a></li>
+                    <li><a href="rode.html" class="hover:text-indigo-600 transition">Curtain Rods</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Office</h4>
+                <ul class="space-y-4 text-sm font-medium text-gray-500">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-location-dot mt-1 text-indigo-600"></i>
+                        <span>Gurgaon, Haryana</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-phone text-indigo-600"></i>
+                        <span>+91 9315536825</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-envelope text-indigo-600"></i>
+                        <span>info@starservices.com</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-[10px] text-gray-400 uppercase tracking-widest">&copy; 2026 Star Services. Home Solutions & Decor Excellence.</p>
+            <div class="flex gap-6 text-[9px] font-bold uppercase tracking-widest text-gray-400">
+                <a href="#" class="hover:text-gray-900">Privacy Policy</a>
+                <a href="#" class="hover:text-gray-900">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        function toggleQuickCart(show) {
+            const c = document.getElementById('quick-cart');
+            if(show) { c.classList.remove('translate-x-full'); renderQuickCart(); }
+            else { c.classList.add('translate-x-full'); }
+        }
+
+        function handleBooking(name, price) {
+            let cart = JSON.parse(localStorage.getItem('StarCart')) || [];
+            const idx = cart.findIndex(i => i.name === name);
+            if(idx > -1) { 
+                cart[idx].qty += 1; 
+                cart[idx].total = cart[idx].qty * price; 
+            } else { 
+                cart.push({ name, price, qty: 1, total: price }); 
+            }
+            localStorage.setItem('StarCart', JSON.stringify(cart));
+            updateNavCount();
+            renderQuickCart();
+            toggleQuickCart(true);
+        }
+
+        function updateDrawerQty(index, delta) {
+            let cart = JSON.parse(localStorage.getItem('StarCart')) || [];
+            cart[index].qty += delta;
+            if(cart[index].qty < 1) { removeItem(index); return; }
+            cart[index].total = cart[index].qty * cart[index].price;
+            localStorage.setItem('StarCart', JSON.stringify(cart));
+            renderQuickCart();
+            updateNavCount();
+        }
+
+        function renderQuickCart() {
+            const container = document.getElementById('quick-cart-items');
+            const cart = JSON.parse(localStorage.getItem('StarCart')) || [];
+            let total = 0;
+            document.getElementById('drawer-count').innerText = cart.length + " Services";
+            container.innerHTML = cart.length ? '' : '<div class="text-center py-20 text-gray-400"><p class="text-xs font-bold uppercase tracking-widest">No services added</p></div>';
+            
+            cart.forEach((item, i) => {
+                total += item.total;
+                container.innerHTML += `
+                    <div class="quick-item-card border-l-4 border-l-indigo-600 shadow-sm">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-[10px] font-black uppercase tracking-tight text-gray-800 leading-tight pr-4">${item.name}</span>
+                            <button onclick="removeItem(${i})" class="text-gray-300 hover:text-red-500 transition-colors"><i class="fa-solid fa-trash-can text-xs"></i></button>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-3 bg-gray-50 px-2 py-1 rounded-full border">
+                                <button onclick="updateDrawerQty(${i}, -1)" class="text-xs font-bold w-6 h-6">-</button>
+                                <span class="text-xs font-black text-indigo-600">${item.qty}</span>
+                                <button onclick="updateDrawerQty(${i}, 1)" class="text-xs font-bold w-6 h-6">+</button>
+                            </div>
+                            <span class="text-gray-900 font-black italic text-sm">₹${item.total}</span>
+                        </div>
+                    </div>`;
+            });
+            document.getElementById('quick-total').innerText = '₹' + total;
+        }
+
+        function removeItem(i) {
+            let cart = JSON.parse(localStorage.getItem('StarCart')) || [];
+            cart.splice(i, 1);
+            localStorage.setItem('StarCart', JSON.stringify(cart));
+            renderQuickCart();
+            updateNavCount();
+        }
+
+        function updateNavCount() {
+            const cart = JSON.parse(localStorage.getItem('StarCart')) || [];
+            const el = document.getElementById('cart-count');
+            if(el) el.innerText = cart.length;
+        }
+        window.onload = () => { updateNavCount(); renderQuickCart(); };
+    </script>
+
+
+
+    
+
+</body>
+</html>

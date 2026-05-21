@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed - Star Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4f7fa; scroll-behavior: smooth; }
+        .heading-font { font-family: 'Playfair Display', serif; }
+        
+        .invoice-box { 
+            background: white; 
+            border-radius: 2rem; 
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Mobile adjustments for invoice card */
+        @media (max-width: 768px) {
+            .invoice-box { border-radius: 1.5rem; padding: 1.5rem !important; }
+            .invoice-header { flex-direction: column; gap: 1.5rem; }
+        }
+
+        .invoice-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #4f46e5, #818cf8);
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .invoice-box { box-shadow: none; border: 1px solid #eee; margin: 0; width: 100%; border-radius: 0; }
+            .invoice-box::before { display: none; }
+        }
+    </style>
+</head>
+<body class="py-8 md:py-20 px-4">
+
+    <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-10 no-print animate-in fade-in zoom-in duration-700">
+            <div class="w-16 h-16 md:w-20 md:h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl md:text-3xl shadow-lg">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-black text-gray-900 mb-2 tracking-tight">Appointment Confirmed!</h1>
+            <p class="text-gray-500 font-medium text-sm md:text-base">Your request has been received. Here is your service summary.</p>
+        </div>
+
+        <div class="invoice-box p-6 md:p-16">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-6 mb-12">
+                <div>
+                    <h2 class="heading-font text-2xl md:text-3xl font-bold text-gray-900">Star <span class="text-indigo-600 italic">Services</span></h2>
+                    <p class="text-[9px] text-gray-400 font-black uppercase tracking-[0.3em] mt-1">Quality Service Guaranteed</p>
+                </div>
+                <div class="text-left md:text-right">
+                    <p class="text-[9px] font-black uppercase text-indigo-300 tracking-widest mb-1">Booking Date</p>
+                    <p id="current-date" class="font-bold text-gray-900 text-sm md:text-base"></p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 border-y border-slate-50 py-8">
+                <div>
+                    <h3 class="text-[9px] font-black uppercase text-gray-400 tracking-widest mb-3">Customer Details</h3>
+                    <p id="bill-name" class="font-bold text-gray-900 text-base md:text-lg mb-1"></p>
+                    <p id="bill-phone" class="text-gray-500 font-medium text-xs md:text-sm"></p>
+                    <p id="bill-address" class="text-gray-500 font-medium text-xs md:text-sm mt-2 max-w-xs leading-relaxed"></p>
+                </div>
+                <div class="md:text-right">
+                    <h3 class="text-[9px] font-black uppercase text-gray-400 tracking-widest mb-3">Service Slot</h3>
+                    <p id="bill-slot" class="font-black text-indigo-600 text-base md:text-lg uppercase tracking-tight"></p>
+                    <p id="bill-service-date" class="text-gray-900 font-bold mt-1 text-sm md:text-base"></p>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-[9px] font-black uppercase text-gray-400 tracking-widest mb-6">Service Summary</h3>
+                <div id="bill-items-container" class="space-y-5">
+                    </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-[2rem] p-6 md:p-10">
+                <div class="flex justify-between items-center mb-4 text-sm">
+                    <span class="text-gray-500 font-bold uppercase tracking-widest text-[9px]">Payment Mode</span>
+                    <span id="bill-method" class="font-black text-gray-900 uppercase tracking-widest text-xs"></span>
+                </div>
+                <div class="flex justify-between items-center pt-5 border-t border-slate-200">
+                    <span class="text-lg md:text-xl font-bold text-gray-900">Total Payable</span>
+                    <span id="bill-total" class="text-3xl md:text-4xl font-black text-indigo-600 italic tracking-tighter"></span>
+                </div>
+            </div>
+
+            <div class="mt-10 text-center">
+                <div class="inline-block bg-indigo-50 text-indigo-600 px-5 py-2 rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
+                    Technician will call 30 mins before arrival
+                </div>
+                <p class="text-gray-400 text-[9px] font-medium italic leading-relaxed">This is an electronically generated receipt for your booking with Star Services.</p>
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-4 mt-10 no-print">
+            <button onclick="window.print()" class="flex-1 bg-gray-900 text-white py-5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl flex items-center justify-center gap-3 active:scale-95">
+                <i class="fa-solid fa-print"></i> Download / Print Bill
+            </button>
+            <a href="index.html" class="flex-1 bg-white border border-slate-200 text-gray-900 py-5 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-slate-50 transition text-center shadow-sm active:scale-95">
+                Go Back Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+    window.onload = function() {
+        // 1. Data load karo
+        const cart = JSON.parse(localStorage.getItem('StarCart')) || [];
+        const custData = JSON.parse(localStorage.getItem('LastBooking'));
+
+        if(!custData) {
+            // Agar data nahi hai, to home page pe bhej do
+            window.location.href = "index.html";
+            return;
+        }
+
+        // 2. Customer Details Fill karo
+        document.getElementById('bill-name').innerText = custData.name || "Customer";
+        document.getElementById('bill-phone').innerText = "+91 " + custData.phone;
+        document.getElementById('bill-address').innerText = custData.address || "Address not provided";
+        document.getElementById('bill-service-date').innerText = custData.address.split('(Date: ')[1]?.split(' |')[0] || "TBA";
+        document.getElementById('bill-slot').innerText = custData.address.split('Slot: ')[1]?.replace(')', '') || "Anytime";
+        document.getElementById('bill-method').innerText = custData.paymentMethod || "Confirmed";
+
+        // 3. Items Summary Fill karo
+        const container = document.getElementById('bill-items-container');
+        let totalAmount = 0;
+        container.innerHTML = '';
+
+        // Check karo ki items array mein hain ya cart mein
+        const itemsToDisplay = custData.items || cart;
+
+        itemsToDisplay.forEach(item => {
+            const price = parseFloat(item.price || 0);
+            const qty = parseInt(item.qty || 1);
+            const total = price * qty;
+            totalAmount += total;
+            
+            container.innerHTML += `
+                <div class="flex justify-between items-start border-b border-slate-50 pb-4">
+                    <div class="flex flex-col">
+                        <span class="text-gray-900 font-bold uppercase text-xs md:text-sm">${item.name}</span>
+                        <span class="text-gray-400 text-[10px] font-medium mt-1">Qty: ${qty} × ₹${price}</span>
+                    </div>
+                    <span class="font-black text-gray-900 italic text-sm md:text-base">₹${total}</span>
+                </div>
+            `;
+        });
+
+        document.getElementById('bill-total').innerText = '₹' + totalAmount;
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+</script>
+    
+</body>
+</html>

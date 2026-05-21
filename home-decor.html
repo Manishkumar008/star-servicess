@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Decor Catalog - Star Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Star Services - Home Decor & AC</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; scroll-behavior: smooth; }
+        .heading-font { font-family: 'Playfair Display', serif; }
+        .glass-nav { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .decor-card { transition: all 0.4s ease; border-radius: 2.5rem; overflow: hidden; background: white; border: 1px solid #f0f0f0; display: flex; flex-direction: column; height: 100%; }
+        .decor-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: #4f46e5; }
+        .decor-card img { height: 320px; width: 100%; object-fit: cover; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVIGATION BAR -->
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between h-20 items-center">
+            <div class="heading-font text-2xl font-bold text-gray-900 tracking-tight">
+                Star <span class="text-indigo-600 font-normal italic"> Services</span>
+            </div>
+            <ul class="hidden lg:flex gap-10 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-600">
+                <li><a href="index.html" class="hover:text-indigo-600 transition">Home</a></li>
+                <li><a href="ac-service.html" class="hover:text-indigo-600 transition">AC Services</a></li>
+                <li><a href="index.html#contact" class="hover:text-indigo-600 transition">Contact</a></li>
+            </ul>
+            <div class="flex items-center gap-6">
+                <a href="checkout.html" class="relative p-2 text-gray-800">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cart-count" class="absolute top-0 right-0 bg-indigo-600 text-white text-[9px] px-1.5 py-0.5 rounded-full font-bold">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. INTERACTIVE HEADER WITH BACKGROUND IMAGE -->
+    <section class="relative pt-64 pb-32 text-center px-4 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <!-- Background Image -->
+            <img src="images/curtainsbackground.png" alt="Decor Background" class="w-full h-full object-cover blur-[2px] brightness-[0.80]">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <span class="text-xs uppercase tracking-[0.6em] font-bold mb-4 block text-indigo-400 italic">Our Collection</span>
+            <h1 class="text-5xl md:text-7xl heading-font text-white mb-6 tracking-tight drop-shadow-2xl">Explore Premium Decor</h1>
+            <div class="w-24 h-1.5 bg-indigo-500 mx-auto rounded-full shadow-lg mb-8"></div>
+            <p class="text-indigo-50 text-sm md:text-base font-medium max-w-2xl mx-auto leading-relaxed opacity-80">
+                Transforming spaces with elegance since 2017. Discover our exclusive range of Curtains, Blinds, and Wallpapers, specifically custom-stitched and tailored to meet your unique needs for your dream home in Gurgaon, Delhi & Noida.
+            </p>
+        </div>
+    </section>
+
+    <!-- 3. DECOR CATEGORIES GRID -->
+    <section class="py-24 max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            
+            <!-- Category: Blinds -->
+            <div class="decor-card">
+                <img src="images/IMAGEZEBRA.png.png" alt="Modern Blinds">
+                <div class="p-10 flex-grow flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-3 uppercase tracking-wider text-gray-900">Modern Blinds</h3>
+                        <p class="text-gray-500 text-sm mb-8 leading-relaxed">Zebra, Roller, and Wooden blinds for office and home. Durable, stylish, and custom-fit.</p>
+                    </div>
+                    <a href="blinds.html" class="inline-block w-full text-center bg-gray-900 text-white py-4 rounded-2xl font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-indigo-600 transition shadow-lg">Explore Blinds</a>
+                </div>
+            </div>
+
+            <!-- Category: Curtains -->
+            <div class="decor-card">
+                <img src="images/OPULENT-curtains.png.png" alt="Premium Curtains">
+                <div class="p-10 flex-grow flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-3 uppercase tracking-wider text-gray-900">Premium Curtains</h3>
+                        <p class="text-gray-500 text-sm mb-8 leading-relaxed">Silk, Velvet, and Cotton fabrics available in 500+ designs. Custom stitching included.</p>
+                    </div>
+                    <a href="curtains.html" class="inline-block w-full text-center bg-gray-900 text-white py-4 rounded-2xl font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-indigo-600 transition shadow-lg">Explore Curtains</a>
+                </div>
+            </div>
+
+            <!-- Category: Wallpaper -->
+            <div class="decor-card">
+                <img src="images/KUSUMWALLPAPER3.png.png" alt="Luxury Wallpapers">
+                <div class="p-10 flex-grow flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-3 uppercase tracking-wider text-gray-900">Wall Wallpaper</h3>
+                        <p class="text-gray-500 text-sm mb-8 leading-relaxed">Imported 3D, Floral, and Modern textures. Fast installation by Star Services experts.</p>
+                    </div>
+                    <a href="wallpaper.html" class="inline-block w-full text-center bg-gray-900 text-white py-4 rounded-2xl font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-indigo-600 transition shadow-lg">Explore Wallpapers</a>
+                </div>
+            </div>
+
+            <!-- Category: Rods -->
+            <div class="decor-card">
+                <img src="images/road.png.png" alt="Curtain Rods">
+                <div class="p-10 flex-grow flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-3 uppercase tracking-wider text-gray-900">Curtain Rods</h3>
+                        <p class="text-gray-500 text-sm mb-8 leading-relaxed">Antique metal, wooden, and luxury hardware to complement your premium drapes.</p>
+                    </div>
+                    <a href="rods.html" class="inline-block w-full text-center bg-gray-900 text-white py-4 rounded-2xl font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-indigo-600 transition shadow-lg">Explore Rods</a>
+                </div>
+            </div>
+
+            <!-- Category: Cleaning -->
+            <div class="decor-card">
+                <img src="images/washing.jpg.png" alt="Fabric Cleaning">
+                <div class="p-10 flex-grow flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-3 uppercase tracking-wider text-gray-900">Curtain Dry Cleaning</h3>
+                        <p class="text-gray-500 text-sm mb-8 leading-relaxed">Professional deep cleaning for curtains and blinds to maintain hygiene and fabric life.</p>
+                    </div>
+                    <a href="cleaning.html" class="inline-block w-full text-center bg-gray-900 text-white py-4 rounded-2xl font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-indigo-600 transition shadow-lg">Explore Cleaning</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="bg-white border-t pt-20 pb-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            
+            <div class="space-y-6">
+                <p class="heading-font text-3xl font-bold text-gray-900">Star <span class="text-indigo-600 italic">Services</span></p>
+                <p class="text-sm text-gray-500 leading-relaxed font-medium">
+                    Transforming spaces with elegance since 2016. We specialize in custom-stitched curtains and tailored decor solutions for your dream home.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Explore</h4>
+                <ul class="space-y-4 text-sm font-bold text-gray-500">
+                    <li><a href="index.html" class="hover:text-indigo-600 transition">Home</a></li>
+                    <li><a href="ac-service.html" class="hover:text-indigo-600 transition">AC Services</a></li>
+                    <li><a href="home-decor.html" class="hover:text-indigo-600 transition">Home Decor</a></li>
+                    <li><a href="#contact" class="hover:text-indigo-600 transition">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Decor Catalog</h4>
+                <ul class="space-y-4 text-sm font-bold text-gray-500">
+                    <li><a href="curtains.html" class="hover:text-indigo-600 transition">Premium Curtains</a></li>
+                    <li><a href="blinds.html" class="hover:text-indigo-600 transition">Modern Blinds</a></li>
+                    <li><a href="wallpaper.html" class="hover:text-indigo-600 transition">3D Wallpapers</a></li>
+                    <li><a href="rode.html" class="hover:text-indigo-600 transition">Curtain Rods</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Office</h4>
+                <ul class="space-y-4 text-sm font-medium text-gray-500">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-location-dot mt-1 text-indigo-600"></i>
+                        <span>Gurgaon, Haryana</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-phone text-indigo-600"></i>
+                        <span>+91 9315536825</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-envelope text-indigo-600"></i>
+                        <span>info@starservices.com</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-[10px] text-gray-400 uppercase tracking-widest">&copy; 2026 Star Services. Home Solutions & Decor Excellence.</p>
+            <div class="flex gap-6 text-[9px] font-bold uppercase tracking-widest text-gray-400">
+                <a href="#" class="hover:text-gray-900">Privacy Policy</a>
+                <a href="#" class="hover:text-gray-900">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        function updateCart() {
+            const cart = JSON.parse(localStorage.getItem('StarCart')) || [];
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+        updateCart();
+    </script>
+</body>
+</html>

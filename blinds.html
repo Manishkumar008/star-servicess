@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Curtains | Star Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
+        .heading-font { font-family: 'Playfair Display', serif; }
+        
+        /* Strict Horizontal Card Alignment Rules */
+        .strict-row-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            gap: 2rem;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        .glass-card { 
+            background: #ffffff; 
+            border-radius: 2.5rem; 
+            overflow: hidden; 
+            transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: calc(33.33% - 1.35rem); /* Locks exactly 3 items in a single straight row */
+            min-width: calc(33.33% - 1.35rem);
+        }
+        .glass-card:hover { transform: translateY(-12px); box-shadow: 0 30px 60px -12px rgba(0,0,0,0.12); }
+
+        .slider-container { 
+            position: relative; 
+            width: 100%; 
+            aspect-ratio: 4/5; 
+            overflow: hidden; 
+            border-radius: 2rem;
+            background: #f1f5f9;
+        }
+        .slider-track { 
+            display: flex; 
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+            width: 100%; height: 100%; 
+        }
+        .slider-track img { min-width: 100%; height: 100%; object-fit: cover; }
+        
+        .slider-btn { 
+            position: absolute; top: 50%; transform: translateY(-50%); 
+            background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); 
+            color: white; width: 40px; height: 40px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            z-index: 10; cursor: pointer; border: 1px solid rgba(255,255,255,0.3);
+            transition: 0.3s;
+        }
+        .slider-btn:hover { background: #fff; color: #000; }
+        .prev-btn { left: 15px; }
+        .next-btn { right: 15px; }
+
+        .slider-dots {
+            position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 6px; z-index: 10;
+        }
+        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.4); border-radius: 50%; transition: 0.3s; }
+        .dot.active { width: 18px; background: #fff; border-radius: 10px; }
+
+        .hero-blinds {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(images/backgroundblinds.png);
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            min-height: 90vh; display: flex; align-items: center; justify-content: center; color: white; text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed w-full top-0 left-0 z-50 bg-white border-b border-gray-100 h-24 flex items-center shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="heading-font text-3xl font-bold tracking-tight text-gray-900 leading-none">
+                    Star <span class="text-indigo-600 font-normal italic"> Services</span>
+                </div>
+            </div>
+            
+            <ul class="hidden md:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
+                <li><a href="index.html" class="hover:text-indigo-600 transition-colors py-2">HOME</a></li>
+                <li><a href="ac-service.html" class="hover:text-indigo-600 transition-colors py-2">AC SERVICES</a></li>
+                <li><a href="home-decor.html" class="text-indigo-600 border-b-2 border-indigo-600 pb-1">HOME DECOR</a></li>
+            </ul>
+
+            <div class="flex items-center">
+                <button onclick="redirectToFormPage()" class="relative p-2 text-gray-800 hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-bag-shopping text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-indigo-600 text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full font-bold border-2 border-white">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-blinds">
+        <div class="relative z-10 px-4">
+            <span class="text-[10px] md:text-xs uppercase tracking-[0.5em] font-bold mb-4 block text-indigo-300">Premium Home Decor</span>
+            <h1 class="text-5xl md:text-8xl heading-font mb-6 leading-none font-black text-white">DECOR YOUR HOME <br> PERFECTION</h1>
+            <p class="text-indigo-100 text-sm md:text-lg max-w-xl mx-auto opacity-90 mb-10 font-medium">Complete Sun Shading Solutions: Innovative Blinds, Shades & More</p>
+        </div>
+    </section>
+
+    <div class="max-w-7xl mx-auto px-4 md:px-8 py-20 space-y-24">
+
+        <section>
+            <div class="text-center mb-16">
+                <h2 class="text-4xl heading-font text-gray-900">Interior Roller Blinds and Shades</h2>
+                <p class="text-indigo-400 font-bold text-xs uppercase tracking-[0.4em] mt-4">Advanced Remote-Controlled Blinds</p>
+            </div>
+            
+            <div class="strict-row-container">          
+                <div class="glass-card p-4 md:p-6 shadow-sm">
+                    <div class="slider-container mb-6">
+                        <button class="slider-btn prev-btn" onclick="moveSlider(this, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="slider-track" data-index="0">
+                            <img src="images/sol1 (1).png" alt="View 1">
+                            <img src="images/sol1 (2).png" alt="View 2">
+                        </div>
+                        <button class="slider-btn next-btn" onclick="moveSlider(this, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <div class="slider-dots"><div class="dot active"></div><div class="dot"></div></div>
+                    </div>
+                    <h3 class="text-sm md:text-xl font-bold text-gray-900 mb-1 uppercase tracking-tight">Roller Blinds</h3>
+                    <p class="text-gray-500 text-[9px] md:text-xs mb-8 italic">For upscale spaces with a view—filter light, maintain privacy, and complement your luxurious surroundings effortlessly</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <p class="text-lg md:text-3xl font-black text-gray-900">₹349<span class="text-[10px] text-gray-400 font-normal">/Sq Ft</span></p>
+                            <span class="text-[8px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded font-bold uppercase">Trending</span>
+                        </div>
+                        <button onclick="addToCartEngine(this, 'Roller Blinds - Premium Suite', 349)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl flex items-center justify-center gap-2">
+                            Connect with Design Team <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 md:p-6 shadow-sm">
+                    <div class="slider-container mb-6">
+                        <button class="slider-btn prev-btn" onclick="moveSlider(this, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="slider-track" data-index="0">
+                            <img src="images/roller (1).png" alt="View 1">
+                            <img src="images/roller (2).png" alt="View 2">
+                            <img src="images/roller (3).png" alt="View 3">
+                            <img src="images/roller (4).png" alt="View 4">
+                        </div>
+                        <button class="slider-btn next-btn" onclick="moveSlider(this, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <div class="slider-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                    </div>
+                    <h3 class="text-sm md:text-xl font-bold text-gray-900 mb-1 uppercase tracking-tight">Roller Blinds</h3>
+                    <p class="text-gray-500 text-[9px] md:text-xs mb-8 italic">Softens sunlight while maintaining privacy.</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <p class="text-lg md:text-3xl font-black text-gray-900">₹390<span class="text-[10px] text-gray-400 font-normal">/Sq Ft</span></p>
+                            <span class="text-[8px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded font-bold uppercase">Trending</span>
+                        </div>
+                        <button onclick="addToCartEngine(this, 'Roller Blinds - Softened Sunlight', 390)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl flex items-center justify-center gap-2">
+                            Connect with Design Team <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                        </button>
+                    </div>
+                </div> 
+
+                <div class="glass-card p-4 md:p-6 shadow-sm">
+                    <div class="slider-container mb-6">
+                        <button class="slider-btn prev-btn" onclick="moveSlider(this, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="slider-track" data-index="0">
+                            <img src="images/greenblinds (1).png" alt="View 1">
+                            <img src="images/greenblinds (2).png" alt="View 2">
+                        </div>
+                        <button class="slider-btn next-btn" onclick="moveSlider(this, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <div class="slider-dots"><div class="dot active"></div><div class="dot"></div></div>
+                    </div>
+                    <h3 class="text-sm md:text-xl font-bold text-gray-900 mb-1 uppercase tracking-tight">Roller Blinds</h3>
+                    <p class="text-gray-500 text-[9px] md:text-xs mb-8 italic">Dark Green leaves Patterned Roller Blinds</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <p class="text-lg md:text-3xl font-black text-gray-900">₹349<span class="text-[10px] text-gray-400 font-normal">/Sq Ft</span></p>
+                            <span class="text-[8px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded font-bold uppercase">Trending</span>
+                        </div>
+                        <button onclick="addToCartEngine(this, 'Roller Blinds - Dark Green Leaves', 349)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl flex items-center justify-center gap-2">
+                            Connect with Design Team <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                        </button>
+                    </div>
+                </div>            
+            </div>  
+        </section>
+
+        <section>
+            <div class="text-center mb-16">
+                <h2 class="text-4xl heading-font text-gray-900">Premium Venetian Blinds</h2>
+                <p class="text-indigo-400 font-bold text-xs uppercase tracking-[0.4em] mt-4">Advanced Remote-Controlled Blinds</p>
+            </div>
+            
+            <div class="strict-row-container">          
+                <div class="glass-card p-4 md:p-6 shadow-sm">
+                    <div class="slider-container mb-6">
+                        <button class="slider-btn prev-btn" onclick="moveSlider(this, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="slider-track" data-index="0">
+                            <img src="images/ven (1).png" alt="View 1">
+                            <img src="images/ven (2).png" alt="View 2">
+                            <img src="images/ven (3).png" alt="View 3">
+                        </div>
+                        <button class="slider-btn next-btn" onclick="moveSlider(this, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <div class="slider-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+                    </div>
+                    <h3 class="text-sm md:text-xl font-bold text-gray-900 mb-1 uppercase tracking-tight">Venetian Blinds</h3>
+                    <p class="text-gray-500 text-[9px] md:text-xs mb-8 italic">Horizontal slats (wood, aluminum, or PVC) that can be tilted for light control.</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <p class="text-lg md:text-3xl font-black text-gray-900">₹300<span class="text-[10px] text-gray-400 font-normal">/Sq Ft</span></p>
+                            <span class="text-[8px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded font-bold uppercase">Trending</span>
+                        </div>
+                        <button onclick="addToCartEngine(this, 'Venetian Blinds - Premium Slats', 300)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl flex items-center justify-center gap-2">
+                            Connect with Design Team <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 md:p-6 shadow-sm">
+                    <div class="slider-container mb-6">
+                        <button class="slider-btn prev-btn" onclick="moveSlider(this, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="slider-track" data-index="0">
+                            <img src="images/ven2 (1).png" alt="View 1">
+                            <img src="images/ven2 (2).png" alt="View 2">
+                            <img src="images/ven2 (3).png" alt="View 3">
+                            <img src="images/ven2 (4).png" alt="View 4">
+                        </div>
+                        <button class="slider-btn next-btn" onclick="moveSlider(this, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <div class="slider-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                    </div>
+                    <h3 class="text-sm md:text-xl font-bold text-gray-900 mb-1 uppercase tracking-tight">Venetian Blinds</h3>
+                    <p class="text-gray-500 text-[9px] md:text-xs mb-8 italic">Venetian Blinds and minimalist decor</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <p class="text-lg md:text-3xl font-black text-gray-900">₹349<span class="text-[10px] text-gray-400 font-normal">/Sq Ft</span></p>
+                            <span class="text-[8px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded font-bold uppercase">Trending</span>
+                        </div>
+                        <button onclick="addToCartEngine(this, 'Venetian Blinds - Minimalist Look', 349)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl flex items-center justify-center gap-2">
+                            Connect with Design Team <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                        </button>
+                    </div>
+                </div> 
+
+                <div class="glass-card p-4 md:p-6 shadow-sm">
+                    <div class="slider-container mb-6">
+                        <button class="slider-btn prev-btn" onclick="moveSlider(this, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="slider-track" data-index="0">
+                            <img src="images/ven3 (1).png" alt="View 1">
+                            <img src="images/ven3 (2).png" alt="View 2">
+                            <img src="images/ven3 (3).png" alt="View 3">
+                            <img src="images/ven3 (4).png" alt="View 4">
+                            <img src="images/ven3 (5).png" alt="View 5">
+                        </div>
+                        <button class="slider-btn next-btn" onclick="moveSlider(this, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <div class="slider-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                    </div>
+                    <h3 class="text-sm md:text-xl font-bold text-gray-900 mb-1 uppercase tracking-tight">Venetian Blinds</h3>
+                    <p class="text-gray-500 text-[9px] md:text-xs mb-8 italic">Venetian Blinds and minimalist decor modern kitchen</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <p class="text-lg md:text-3xl font-black text-gray-900">₹349<span class="text-[10px] text-gray-400 font-normal">/Sq Ft</span></p>
+                            <span class="text-[8px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded font-bold uppercase">Trending</span>
+                        </div>
+                        <button onclick="addToCartEngine(this, 'Venetian Blinds - Modern Kitchen', 349)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl flex items-center justify-center gap-2">
+                            Connect with Design Team <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                        </button>
+                    </div>
+                </div> 
+            </div>
+        </section>
+
+        <section>
+            <div class="text-center mb-16">
+                <h2 class="text-4xl heading-font text-gray-900">Premium Vertical Blinds</h2>
+                <p class="text-indigo-400 font-bold text-xs uppercase tracking-[0.4em] mt-4">Advanced Vertical Blinds control sun lighting with ease</p>
+            </div>
+            
+            <div class="strict-row-container">          
+                <div class="glass-card p-4 md:p-6 shadow-sm">
+                    <div class="slider-container mb-6">
+                        <button class="slider-btn prev-btn" onclick="moveSlider(this, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="slider-track" data-index="0">
+                            <img src="images/vartical1 (1).png" alt="View 1">
+                            <img src="images/vartical1 (2).png" alt="View 2">
+                            <img src="images/vartical1 (3).png" alt="View 3">
+                            <img src="images/vartical1 (4).png" alt="View 4">
+                            <img src="images/vartical1 (5).png" alt="View 5">
+                        </div>
+                        <button class="slider-btn next-btn" onclick="moveSlider(this, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <div class="slider-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                    </div>
+                    <h3 class="text-sm md:text-xl font-bold text-gray-900 mb-1 uppercase tracking-tight">Vertical Blinds - Living Room</h3>
+                    <p class="text-gray-500 text-[9px] md:text-xs mb-8 italic">Vertical blinds are making a functional and stylish return in large, modern living spaces. This window treatment is a hallmark of the 80s apartment aesthetic, offering great light control and a streamlined look.</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <p class="text-lg md:text-3xl font-black text-gray-900">₹400<span class="text-[10px] text-gray-400 font-normal">/Sq Ft</span></p>
+                            <span class="text-[8px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded font-bold uppercase">Trending</span>
+                        </div>
+                        <button onclick="addToCartEngine(this, 'Wood Blinds - Living Room', 400)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl flex items-center justify-center gap-2">
+                            Connect with Design Team <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 md:p-6 shadow-sm">
+                    <div class="slider-container mb-6">
+                        <button class="slider-btn prev-btn" onclick="moveSlider(this, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="slider-track" data-index="0">
+                            <img src="images/vart1 (1).png" alt="View 1">
+                            <img src="images/vart1 (2).png" alt="View 2">
+                            <img src="images/vart1 (3).png" alt="View 3">
+                            <img src="images/vart1 (4).png" alt="View 4">
+                            <img src="images/vart1 (5).png" alt="View 5">
+                        </div>
+                        <button class="slider-btn next-btn" onclick="moveSlider(this, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <div class="slider-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                    </div>
+                    <h3 class="text-sm md:text-xl font-bold text-gray-900 mb-1 uppercase tracking-tight">Vertical Blinds - Bedroom</h3>
+                    <p class="text-gray-500 text-[9px] md:text-xs mb-8 italic">Complete your decor with a wood slat wall and matching wood Venetian blinds 🏡 Add cohesion and warmth effortlessly.</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <p class="text-lg md:text-3xl font-black text-gray-900">₹500<span class="text-[10px] text-gray-400 font-normal">/Sq Ft</span></p>
+                            <span class="text-[8px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded font-bold uppercase">Trending</span>
+                        </div>
+                        <button onclick="addToCartEngine(this, 'Vertical Blinds - Bedroom', 500)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl flex items-center justify-center gap-2">
+                            Connect with Design Team <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                        </button>
+                    </div>
+                </div> 
+
+                <div class="glass-card p-4 md:p-6 shadow-sm">
+                    <div class="slider-container mb-6">
+                        <button class="slider-btn prev-btn" onclick="moveSlider(this, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <div class="slider-track" data-index="0">
+                            <img src="images/vertical2 (1).png" alt="View 1">
+                            <img src="images/vertical2 (2).png" alt="View 2">
+                            <img src="images/vertical2 (3).png" alt="View 3">
+                            <img src="images/vertical2 (4).png" alt="View 4">
+                            <img src="images/vertical2 (5).png" alt="View 5">
+                            <img src="images/vertical2 (6).png" alt="View 6">
+                            <img src="images/vertical2 (7).png" alt="View 7">
+                            <img src="images/vertical2 (8).png" alt="View 8">
+                            <img src="images/vertical2 (9).png" alt="View 9">
+                            <img src="images/vertical2 (10).png" alt="View 10"> 
+                            <img src="images/vertical2 (11).png" alt="View 11">
+                        </div>
+                        <button class="slider-btn next-btn" onclick="moveSlider(this, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <div class="slider-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+                    </div>
+                    <h3 class="text-sm md:text-xl font-bold text-gray-900 mb-1 uppercase tracking-tight">Vertical Blinds - Offices</h3>
+                    <p class="text-gray-500 text-[9px] md:text-xs mb-8 italic">Discover rigid PVC vertical blinds, perfect for commercial and residential spaces. These durable, low-maintenance blinds provide privacy, style, and long-lasting performance.</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-between items-center mb-6">
+                            <p class="text-lg md:text-3xl font-black text-gray-900">₹559<span class="text-[10px] text-gray-400 font-normal">/Sq Ft</span></p>
+                            <span class="text-[8px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded font-bold uppercase">Trending</span>
+                        </div>
+                        <button onclick="addToCartEngine(this, 'Vertical Blinds - Offices', 559)" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition shadow-xl flex items-center justify-center gap-2">
+                            Connect with Design Team <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                        </button>
+                    </div>
+                </div>       
+            </div>            
+        </section>
+
+    </div>
+
+    <footer class="bg-white border-t pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="space-y-6">
+                    <p class="heading-font text-3xl font-bold text-gray-900">Star <span class="text-indigo-600 italic">Services</span></p>
+                    <p class="text-sm text-gray-500 leading-relaxed font-medium">Transforming spaces with elegance since 2016. We specialize in custom-stitched curtains and tailored decor solutions for your dream home.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Explore</h4>
+                    <ul class="space-y-4 text-sm font-bold text-gray-500">
+                        <li><a href="index.html" class="hover:text-indigo-600 transition">Home</a></li>
+                        <li><a href="ac-service.html" class="hover:text-indigo-600 transition">AC Services</a></li>
+                        <li><a href="home-decor.html" class="hover:text-indigo-600 transition">Home Decor</a></li>
+                        <li><a href="#contact" class="hover:text-indigo-600 transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Decor Catalog</h4>
+                    <ul class="space-y-4 text-sm font-bold text-gray-500">
+                        <li><a href="curtains.html" class="hover:text-indigo-600 transition">Premium Curtains</a></li>
+                        <li><a href="blinds.html" class="hover:text-indigo-600 transition">Modern Blinds</a></li>
+                        <li><a href="wallpaper.html" class="hover:text-indigo-600 transition">3D Wallpapers</a></li>
+                        <li><a href="rode.html" class="hover:text-indigo-600 transition">Curtain Rods</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Office</h4>
+                    <ul class="space-y-4 text-sm font-medium text-gray-500">
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-location-dot mt-1 text-indigo-600"></i><span>Gurgaon, Haryana</span></li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-phone text-indigo-600"></i><span>+91 9315536825</span></li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-envelope text-indigo-600"></i><span>info@starservices.com</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest">&copy; 2026 Star Services. Home Solutions & Decor Excellence.</p>
+                <div class="flex gap-6 text-[9px] font-bold uppercase tracking-widest text-gray-400">
+                    <a href="#" class="hover:text-gray-900">Privacy Policy</a>
+                    <a href="#" class="hover:text-gray-900">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentDecorCart = [];
+
+        function moveSlider(btn, direction) {
+            const container = btn.parentElement;
+            const track = container.querySelector('.slider-track');
+            const images = track.querySelectorAll('img');
+            const dots = container.querySelectorAll('.dot');
+            let currentIndex = parseInt(track.getAttribute('data-index')) || 0;
+
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            track.setAttribute('data-index', currentIndex);
+
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentIndex);
+            });
+        }
+
+        function addToCartEngine(buttonElement, productName, productPrice) {
+            const index = currentDecorCart.findIndex(item => item.name === productName);
+
+            if (index > -1) {
+                currentDecorCart.splice(index, 1);
+                buttonElement.innerHTML = `Connect with Design Team <i class="fa-solid fa-arrow-right text-[8px]"></i>`;
+                buttonElement.style.backgroundColor = '#111827';
+            } else {
+                currentDecorCart.push({ name: productName, price: productPrice });
+                buttonElement.innerHTML = `Added to Bag <i class="fa-solid fa-check text-[8px]"></i>`;
+                buttonElement.style.backgroundColor = '#4f46e5';
+            }
+
+            document.getElementById('cart-count').innerText = currentDecorCart.length;
+        }
+
+        function redirectToFormPage() {
+            if (currentDecorCart.length === 0) {
+                alert("Please add at least 1 item to your design bag before checking out!");
+                return;
+            }
+            localStorage.setItem('hkCart', JSON.stringify(currentDecorCart));
+            window.location.href = 'decor-enquiry.html';
+        }
+    </script>
+</body>
+</html>

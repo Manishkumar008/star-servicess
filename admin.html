@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Star Services Admin Dashboard</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore-compat.js"></script>
+
+    <!-- Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex bg-slate-50 overflow-x-hidden">
+
+    <!-- MOBILE MENU -->
+    <button onclick="toggleSidebar()"
+        class="fixed md:hidden top-4 left-4 z-50 bg-indigo-600 text-white h-10 w-10 rounded-xl shadow-lg">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar"
+        class="fixed md:relative z-40 top-0 left-0 h-screen w-64 bg-white border-r border-slate-200 p-5 flex flex-col justify-between transform -translate-x-full md:translate-x-0 transition-all duration-300">
+
+        <div>
+
+            <!-- LOGO -->
+            <div class="flex items-center gap-3 border-b pb-4 mb-6">
+
+                <div
+                    class="h-10 w-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black">
+                    S
+                </div>
+
+                <div>
+                    <h1 class="text-sm font-black uppercase tracking-wider">
+                        STAR SERVICES
+                    </h1>
+
+                    <p class="text-[9px] uppercase text-slate-400 font-bold">
+                        Admin Console
+                    </p>
+                </div>
+            </div>
+
+            <!-- MENU -->
+            <div class="space-y-2">
+
+                <button onclick="switchSection('overview')"
+                    class="nav-btn w-full flex items-center gap-2 bg-indigo-50 text-indigo-600 px-4 py-3 rounded-xl text-[11px] font-bold"
+                    id="nav-overview">
+
+                    <i class="fa-solid fa-chart-line"></i>
+                    Analytics
+
+                </button>
+
+                <button onclick="switchSection('team')"
+                    class="nav-btn w-full flex items-center gap-2 text-slate-600 hover:bg-slate-50 px-4 py-3 rounded-xl text-[11px] font-bold"
+                    id="nav-team">
+
+                    <i class="fa-solid fa-users"></i>
+                    Team Performance
+
+                </button>
+
+                <button onclick="switchSection('ac')"
+                    class="nav-btn w-full flex items-center gap-2 text-slate-600 hover:bg-slate-50 px-4 py-3 rounded-xl text-[11px] font-bold"
+                    id="nav-ac">
+
+                    <i class="fa-solid fa-snowflake"></i>
+                    AC Services
+
+                </button>
+
+                <button onclick="switchSection('decor')"
+                    class="nav-btn w-full flex items-center gap-2 text-slate-600 hover:bg-slate-50 px-4 py-3 rounded-xl text-[11px] font-bold"
+                    id="nav-decor">
+
+                    <i class="fa-solid fa-couch"></i>
+                    Home Decor
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="bg-slate-50 border rounded-xl p-3 text-[10px] font-bold text-slate-500">
+            🟢 LIVE FIREBASE SYNC
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="flex-1 p-4 md:p-6 overflow-x-hidden">
+
+        <!-- OVERVIEW -->
+        <section id="section-overview" class="dashboard-section space-y-6">
+
+            <div>
+                <h2 class="text-xl font-black uppercase text-slate-900">
+                    Operational Analytics
+                </h2>
+
+                <p class="text-xs text-slate-500">
+                    Revenue, tracking & conversion analytics
+                </p>
+            </div>
+
+            <!-- STATS -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+
+                <div class="bg-white border rounded-2xl p-4 shadow-sm">
+                    <p class="text-[9px] uppercase text-slate-400 font-bold">
+                        Total Leads
+                    </p>
+
+                    <h2 id="total-leads"
+                        class="text-2xl font-black text-slate-900 mt-2">
+                        0
+                    </h2>
+                </div>
+
+                <div class="bg-white border rounded-2xl p-4 shadow-sm">
+                    <p class="text-[9px] uppercase text-blue-500 font-bold">
+                        AC Revenue
+                    </p>
+
+                    <h2 id="gross-ac-rev"
+                        class="text-2xl font-black text-blue-600 mt-2">
+                        ₹0
+                    </h2>
+                </div>
+
+                <div class="bg-white border rounded-2xl p-4 shadow-sm">
+                    <p class="text-[9px] uppercase text-amber-500 font-bold">
+                        Decor Revenue
+                    </p>
+
+                    <h2 id="gross-decor-rev"
+                        class="text-2xl font-black text-amber-600 mt-2">
+                        ₹0
+                    </h2>
+                </div>
+
+                <div class="bg-white border rounded-2xl p-4 shadow-sm">
+                    <p class="text-[9px] uppercase text-green-500 font-bold">
+                        Total Revenue
+                    </p>
+
+                    <h2 id="gross-total-rev"
+                        class="text-2xl font-black text-green-600 mt-2">
+                        ₹0
+                    </h2>
+                </div>
+
+            </div>
+
+            <!-- CHART + INSIGHT -->
+            <div class="grid lg:grid-cols-3 gap-5">
+
+                <!-- CHART -->
+                <div class="lg:col-span-2 bg-white border rounded-3xl p-5 shadow-sm">
+
+                    <div class="border-b pb-3 mb-4">
+                        <h3 class="text-[11px] uppercase font-bold text-slate-700">
+                            Location Conversion Analytics
+                        </h3>
+                    </div>
+
+                    <div class="h-[260px]">
+                        <canvas id="locationChart"></canvas>
+                    </div>
+
+                </div>
+
+                <!-- INSIGHT -->
+                <div class="bg-white border rounded-3xl p-5 shadow-sm space-y-4">
+
+                    <div class="border-b pb-3">
+                        <h3 class="text-[11px] uppercase font-bold text-slate-700">
+                            Target Strategy Insight
+                        </h3>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-2xl p-4 border">
+                        <p class="text-[9px] uppercase font-bold text-slate-400">
+                            Top Converting Region
+                        </p>
+
+                        <h2 id="top-region"
+                            class="text-sm font-black text-indigo-600 mt-1">
+                            Gurgaon
+                        </h2>
+                    </div>
+
+                    <div class="bg-slate-50 rounded-2xl p-4 border">
+                        <p class="text-[9px] uppercase font-bold text-slate-400">
+                            Highest Conversion Type
+                        </p>
+
+                        <h2 id="top-service"
+                            class="text-sm font-black text-slate-800 mt-1">
+                            AC Services
+                        </h2>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- TEAM -->
+        <section id="section-team"
+            class="dashboard-section hidden space-y-8">
+
+            <!-- AC TEAM -->
+            <div>
+
+                <div class="flex items-center gap-2 border-b pb-3 mb-5">
+                    <i class="fa-solid fa-snowflake text-blue-600"></i>
+
+                    <h2 class="text-lg font-black uppercase text-slate-900">
+                        AC Services Team
+                    </h2>
+                </div>
+
+                <div id="ac-team-grid"
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+
+            </div>
+
+            <!-- DECOR TEAM -->
+            <div>
+
+                <div class="flex items-center gap-2 border-b pb-3 mb-5">
+                    <i class="fa-solid fa-couch text-amber-600"></i>
+
+                    <h2 class="text-lg font-black uppercase text-slate-900">
+                        Home Decor Team
+                    </h2>
+                </div>
+
+                <div id="decor-team-grid"
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+
+            </div>
+
+        </section>
+
+        <!-- AC -->
+        <section id="section-ac"
+            class="dashboard-section hidden">
+
+            <div class="flex items-center gap-2 border-b pb-4 mb-6">
+
+                <i class="fa-solid fa-snowflake text-indigo-600"></i>
+
+                <h2 class="text-lg font-black text-slate-900 uppercase">
+                    AC Service Board
+                </h2>
+
+            </div>
+
+            <div id="ac-grid"
+                class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+
+        </section>
+
+        <!-- DECOR -->
+        <section id="section-decor"
+            class="dashboard-section hidden">
+
+            <div class="flex items-center gap-2 border-b pb-4 mb-6">
+
+                <i class="fa-solid fa-couch text-indigo-600"></i>
+
+                <h2 class="text-lg font-black text-slate-900 uppercase">
+                    Home Decor Board
+                </h2>
+
+            </div>
+
+            <div id="decor-grid"
+                class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+
+        </section>
+
+    </main>
+
+    <script>
+
+        // FIREBASE CONFIG
+        const firebaseConfig = {
+
+            apiKey: "AIzaSyC9m2rYxcx4e3LhZM5WaAZLzGHVYsepgjA",
+
+            authDomain: "starservicesadmin.firebaseapp.com",
+
+            projectId: "starservicesadmin",
+
+            storageBucket: "starservicesadmin.firebasestorage.app",
+
+            messagingSenderId: "429377488878",
+
+            appId: "1:429377488878:web:1dfa774544de27d271f0ff"
+
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const db = firebase.firestore();
+
+        // MOBILE SIDEBAR
+        function toggleSidebar() {
+
+            document.getElementById('sidebar')
+                .classList.toggle('-translate-x-full');
+        }
+
+        // SECTION SWITCH
+        function switchSection(key) {
+
+            document.querySelectorAll('.dashboard-section')
+                .forEach(section => section.classList.add('hidden'));
+
+            document.getElementById(`section-${key}`)
+                .classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn')
+                .forEach(btn => {
+
+                    btn.classList.remove('bg-indigo-50', 'text-indigo-600');
+                });
+
+            document.getElementById(`nav-${key}`)
+                .classList.add('bg-indigo-50', 'text-indigo-600');
+
+            if (window.innerWidth < 768) {
+                toggleSidebar();
+            }
+        }
+
+        // CHART
+        let locationChartInstance = null;
+
+        function renderChart(gurgaon, noida, other) {
+
+            const ctx = document.getElementById('locationChart').getContext('2d');
+
+            if (locationChartInstance) {
+                locationChartInstance.destroy();
+            }
+
+            locationChartInstance = new Chart(ctx, {
+
+                type: 'bar',
+
+                data: {
+
+                    labels: ['Gurgaon', 'Noida', 'Other'],
+
+                    datasets: [{
+
+                        data: [gurgaon, noida, other],
+
+                        backgroundColor: [
+                            '#6366f1',
+                            '#3b82f6',
+                            '#94a3b8'
+                        ],
+
+                        borderRadius: 10
+                    }]
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // UPDATE STATUS
+        async function updateLeadState(docId, fieldName, value) {
+
+            let obj = {};
+
+            obj[fieldName] = value;
+
+            await db.collection("Queries")
+                .doc(docId)
+                .update(obj);
+        }
+
+        // UPDATE PAYMENT
+        async function updateCustomPayment(docId, amount) {
+
+            await db.collection("Queries")
+                .doc(docId)
+                .update({
+
+                    actualCollectedPayment: parseFloat(amount || 0)
+                });
+        }
+
+        // FIREBASE STREAM
+        db.collection("Queries")
+            .orderBy("timestamp", "desc")
+            .onSnapshot((snapshot) => {
+
+                const acGrid = document.getElementById('ac-grid');
+                const decorGrid = document.getElementById('decor-grid');
+
+                const acTeamGrid = document.getElementById('ac-team-grid');
+                const decorTeamGrid = document.getElementById('decor-team-grid');
+
+                acGrid.innerHTML = "";
+                decorGrid.innerHTML = "";
+
+                let totalLeads = 0;
+
+                let acRevenue = 0;
+                let decorRevenue = 0;
+
+                let gurgaon = 0;
+                let noida = 0;
+                let other = 0;
+
+                // TEAM DATA
+                const acTeam = {
+                    "Sandeep Kumar": { jobs: 0, revenue: 0 },
+                    "Amit Sharma": { jobs: 0, revenue: 0 },
+                    "Vikram Singh": { jobs: 0, revenue: 0 }
+                };
+
+                const decorTeam = {
+                    "Rajesh Kumar": { jobs: 0, revenue: 0 },
+                    "Nitin Verma": { jobs: 0, revenue: 0 },
+                    "Rahul Verma": { jobs: 0, revenue: 0 }
+                };
+
+                snapshot.forEach((doc) => {
+
+                    totalLeads++;
+
+                    const data = doc.data();
+
+                    const id = doc.id;
+
+                    const type = (data.type || "AC").toUpperCase();
+
+                    const leadStatus = data.leadStatus || "Pending";
+
+                    const assignedTech = data.assignedServiceman || "Unassigned";
+
+                    const cashCollected =
+                        parseFloat(data.actualCollectedPayment || 0);
+
+                    const addr = data.address || "";
+
+                    // LOCATION
+                    if (leadStatus === "Completed") {
+
+                        const upper = addr.toUpperCase();
+
+                        if (upper.includes("GURGAON")) {
+                            gurgaon++;
+                        }
+                        else if (upper.includes("NOIDA")) {
+                            noida++;
+                        }
+                        else {
+                            other++;
+                        }
+                    }
+
+                    // REVENUE
+                    if (type.includes('AC')) {
+
+                        acRevenue += cashCollected;
+
+                        if (acTeam[assignedTech]) {
+                            acTeam[assignedTech].jobs++;
+                            acTeam[assignedTech].revenue += cashCollected;
+                        }
+
+                    } else {
+
+                        decorRevenue += cashCollected;
+
+                        if (decorTeam[assignedTech]) {
+                            decorTeam[assignedTech].jobs++;
+                            decorTeam[assignedTech].revenue += cashCollected;
+                        }
+                    }
+
+                    // PRODUCT HTML
+                    let itemsHtml = "";
+                    let totalBill = 0;
+
+                    if (Array.isArray(data.items) && data.items.length > 0) {
+
+                        itemsHtml = data.items.map(item => {
+
+                            totalBill += parseFloat(item.price || 0);
+
+                            return `
+
+                            <div class="flex justify-between items-center border-b py-1 text-[10px]">
+
+                                <span class="font-semibold text-slate-700">
+                                    ${item.name}
+                                </span>
+
+                                <span class="font-black text-indigo-600">
+                                    ₹${item.price}
+                                </span>
+
+                            </div>
+
+                            `;
+
+                        }).join('');
+
+                    }
+                    else if (data.selectedItems &&
+                        data.selectedItems.trim() !== "") {
+
+                        itemsHtml = `
+
+                            <div class="text-[10px] text-slate-700 whitespace-pre-line leading-5">
+                                ${data.selectedItems}
+                            </div>
+
+                        `;
+
+                        totalBill = cashCollected;
+                    }
+                    else {
+
+                        itemsHtml = `
+
+                            <p class="text-[10px] italic text-slate-400">
+                                No products found.
+                            </p>
+
+                        `;
+                    }
+
+                    // CARD
+                    const card = `
+
+                        <div class="bg-white border rounded-[28px] p-5 shadow-sm">
+
+                            <!-- TOP -->
+                            <div class="flex justify-between items-center border-b pb-3 mb-4">
+
+                                <span class="text-[9px] text-slate-400 font-mono">
+                                    ID: ${id.substring(0,6)}
+                                </span>
+
+                                <span class="text-[9px] px-3 py-1 rounded-xl font-bold uppercase
+
+                                    ${leadStatus === 'Completed'
+                            ? 'bg-green-100 text-green-700'
+                            : leadStatus === 'Cancelled'
+                                ? 'bg-red-100 text-red-700'
+                                : 'bg-amber-100 text-amber-700'}">
+
+                                    ${leadStatus}
+
+                                </span>
+
+                            </div>
+
+                            <!-- USER -->
+                            <div class="space-y-1">
+
+                                <h3 class="text-base font-black uppercase text-slate-900">
+                                    ${data.name || "Customer"}
+                                </h3>
+
+                                <p class="text-indigo-600 font-bold text-xs">
+                                    +91 ${data.phone || ""}
+                                </p>
+
+                            </div>
+
+                            <!-- ADDRESS -->
+                            <div class="mt-4 bg-slate-100 rounded-2xl p-3">
+
+                                <p class="text-[10px] font-bold uppercase text-slate-400 mb-1">
+                                    Address
+                                </p>
+
+                                <p class="text-[11px] text-slate-700">
+                                    ${addr}
+                                </p>
+
+                            </div>
+
+                            <!-- PRODUCTS -->
+                            <div class="mt-4 border rounded-2xl p-4">
+
+                                <div class="flex justify-between items-center border-b pb-2 mb-3">
+
+                                    <p class="text-[9px] font-black uppercase text-slate-400">
+                                        Product / Service Details
+                                    </p>
+
+                                    <i class="fa-solid fa-receipt text-indigo-500 text-xs"></i>
+
+                                </div>
+
+                                ${itemsHtml}
+
+                                <!-- TOTAL -->
+                                <div class="flex justify-between items-center mt-4 pt-3 border-t">
+
+                                    <span class="text-[10px] uppercase font-black text-slate-500">
+                                        Total Bill
+                                    </span>
+
+                                    <span class="text-sm font-black text-green-600">
+                                        ₹${totalBill}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <!-- ACTION -->
+                            <div class="mt-5 pt-4 border-t space-y-3">
+
+                                <select
+                                    onchange="updateLeadState('${id}', 'assignedServiceman', this.value)"
+
+                                    class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-[11px] font-bold">
+
+                                    <option value="Unassigned">
+                                        -- Select Team Member --
+                                    </option>
+
+                                    <option value="Sandeep Kumar"
+                                        ${assignedTech === 'Sandeep Kumar' ? 'selected' : ''}>
+                                        Sandeep Kumar
+                                    </option>
+
+                                    <option value="Amit Sharma"
+                                        ${assignedTech === 'Amit Sharma' ? 'selected' : ''}>
+                                        Amit Sharma
+                                    </option>
+
+                                    <option value="Vikram Singh"
+                                        ${assignedTech === 'Vikram Singh' ? 'selected' : ''}>
+                                        Vikram Singh
+                                    </option>
+
+                                    <option value="Rajesh Kumar"
+                                        ${assignedTech === 'Rajesh Kumar' ? 'selected' : ''}>
+                                        Rajesh Kumar
+                                    </option>
+
+                                    <option value="Nitin Verma"
+                                        ${assignedTech === 'Nitin Verma' ? 'selected' : ''}>
+                                        Nitin Verma
+                                    </option>
+
+                                    <option value="Rahul Verma"
+                                        ${assignedTech === 'Rahul Verma' ? 'selected' : ''}>
+                                        Rahul Verma
+                                    </option>
+
+                                </select>
+
+                                <div class="grid grid-cols-2 gap-3">
+
+                                    <select
+                                        onchange="updateLeadState('${id}', 'leadStatus', this.value)"
+
+                                        class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-[11px] font-bold">
+
+                                        <option value="Pending"
+                                            ${leadStatus === 'Pending' ? 'selected' : ''}>
+                                            Pending
+                                        </option>
+
+                                        <option value="Completed"
+                                            ${leadStatus === 'Completed' ? 'selected' : ''}>
+                                            Completed
+                                        </option>
+
+                                        <option value="Cancelled"
+                                            ${leadStatus === 'Cancelled' ? 'selected' : ''}>
+                                            Cancelled
+                                        </option>
+
+                                    </select>
+
+                                    <input
+                                        type="number"
+                                        value="${cashCollected}"
+
+                                        onblur="updateCustomPayment('${id}', this.value)"
+
+                                        class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-[11px] font-black"
+
+                                        placeholder="Revenue">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                    // PUSH
+                    if (type.includes('AC')) {
+                        acGrid.innerHTML += card;
+                    }
+                    else {
+                        decorGrid.innerHTML += card;
+                    }
+
+                });
+
+                // UPDATE TEAM
+                acTeamGrid.innerHTML = "";
+
+                Object.keys(acTeam).forEach(member => {
+
+                    acTeamGrid.innerHTML += `
+
+                        <div class="bg-white border rounded-3xl p-5 shadow-sm">
+
+                            <div class="flex items-center justify-between">
+
+                                <h2 class="text-sm font-black uppercase text-slate-900">
+                                    ${member}
+                                </h2>
+
+                                <div class="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+
+                            </div>
+
+                            <div class="mt-5 space-y-2">
+
+                                <div class="flex justify-between text-[11px]">
+                                    <span class="text-slate-500 font-bold">
+                                        Completed Jobs
+                                    </span>
+
+                                    <span class="font-black">
+                                        ${acTeam[member].jobs}
+                                    </span>
+                                </div>
+
+                                <div class="flex justify-between text-[11px]">
+                                    <span class="text-slate-500 font-bold">
+                                        Revenue
+                                    </span>
+
+                                    <span class="font-black text-green-600">
+                                        ₹${acTeam[member].revenue}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    `;
+                });
+
+                decorTeamGrid.innerHTML = "";
+
+                Object.keys(decorTeam).forEach(member => {
+
+                    decorTeamGrid.innerHTML += `
+
+                        <div class="bg-white border rounded-3xl p-5 shadow-sm">
+
+                            <div class="flex items-center justify-between">
+
+                                <h2 class="text-sm font-black uppercase text-slate-900">
+                                    ${member}
+                                </h2>
+
+                                <div class="h-10 w-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+
+                            </div>
+
+                            <div class="mt-5 space-y-2">
+
+                                <div class="flex justify-between text-[11px]">
+                                    <span class="text-slate-500 font-bold">
+                                        Completed Projects
+                                    </span>
+
+                                    <span class="font-black">
+                                        ${decorTeam[member].jobs}
+                                    </span>
+                                </div>
+
+                                <div class="flex justify-between text-[11px]">
+                                    <span class="text-slate-500 font-bold">
+                                        Revenue
+                                    </span>
+
+                                    <span class="font-black text-green-600">
+                                        ₹${decorTeam[member].revenue}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    `;
+                });
+
+                // UPDATE STATS
+                document.getElementById('total-leads').innerText =
+                    totalLeads;
+
+                document.getElementById('gross-ac-rev').innerText =
+                    "₹" + acRevenue;
+
+                document.getElementById('gross-decor-rev').innerText =
+                    "₹" + decorRevenue;
+
+                document.getElementById('gross-total-rev').innerText =
+                    "₹" + (acRevenue + decorRevenue);
+
+                // TOP REGION
+                let topRegion = "Gurgaon";
+                let max = gurgaon;
+
+                if (noida > max) {
+                    max = noida;
+                    topRegion = "Noida";
+                }
+
+                if (other > max) {
+                    max = other;
+                    topRegion = "Other";
+                }
+
+                document.getElementById('top-region')
+                    .innerText = topRegion;
+
+                document.getElementById('top-service')
+                    .innerText =
+                    acRevenue >= decorRevenue
+                        ? "AC Services"
+                        : "Home Decor";
+
+                // CHART
+                renderChart(gurgaon, noida, other);
+
+            });
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaning Services | Star Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .heading-font { font-family: 'Playfair Display', serif; }
+        .glass-card { background: #ffffff; border-radius: 2rem; overflow: hidden; transition: 0.4s; border: 1px solid #f1f5f9; display: flex; flex-direction: column; height: 100%; }
+        .glass-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); }
+        .slider-container { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 1.5rem; background: #f1f5f9; }
+        .slider-track { display: flex; transition: transform 0.6s ease; width: 100%; height: 100%; }
+        .slider-track img { min-width: 100%; height: 100%; object-fit: cover; }
+        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.3); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; cursor: pointer; }
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <nav class="sticky top-0 z-[1000] bg-white border-b h-20 flex items-center shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
+            <div class="heading-font text-2xl font-bold">Star <span class="text-indigo-600">Services</span></div>
+            <button onclick="redirectToFormPage()" class="relative p-2 hover:scale-110 transition-transform">
+                <i class="fa-solid fa-bag-shopping text-xl"></i>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-indigo-600 text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full font-bold">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-20">
+        <h2 class="text-4xl heading-font text-center mb-16">Professional Cleaning Services</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <div class="glass-card p-4 shadow-sm">
+                <div class="slider-container mb-6">
+                    <button class="slider-btn prev-btn" onclick="moveSlider(this, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="slider-track" data-index="0">
+                        <img src="images/curtain-clean1.png" alt="Curtain Clean">
+                        <img src="images/curtain-clean2.png" alt="Curtain Press">
+                    </div>
+                    <button class="slider-btn next-btn" onclick="moveSlider(this, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <h3 class="text-lg font-bold px-2">Curtain Cleaning & Pressing</h3>
+                <p class="text-gray-500 text-xs px-2 mb-4 italic">Deep steam cleaning and professional pressing for a fresh look.</p>
+                <div class="mt-auto px-2">
+                    <button onclick="addToCartEngine(this, 'Curtain Cleaning & Pressing', 500)" class="w-full bg-gray-900 text-white py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-indigo-600 transition flex items-center justify-center gap-2">
+                        Book Service <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass-card p-4 shadow-sm">
+                <div class="slider-container mb-6">
+                    <button class="slider-btn prev-btn" onclick="moveSlider(this, -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="slider-track" data-index="0">
+                        <img src="images/sofa-clean1.png" alt="Sofa Clean">
+                        <img src="images/sofa-clean2.png" alt="Sofa Wash">
+                    </div>
+                    <button class="slider-btn next-btn" onclick="moveSlider(this, 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <h3 class="text-lg font-bold px-2">Professional Sofa Cleaning</h3>
+                <p class="text-gray-500 text-xs px-2 mb-4 italic">Removing stains, dust, and allergens with industrial-grade machines.</p>
+                <div class="mt-auto px-2">
+                    <button onclick="addToCartEngine(this, 'Sofa Cleaning', 800)" class="w-full bg-gray-900 text-white py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-indigo-600 transition flex items-center justify-center gap-2">
+                        Book Service <i class="fa-solid fa-arrow-right text-[8px]"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        let currentCart = [];
+        
+        function moveSlider(btn, dir) {
+            const track = btn.parentElement.querySelector('.slider-track');
+            let idx = parseInt(track.getAttribute('data-index')) + dir;
+            const len = track.querySelectorAll('img').length;
+            idx = (idx + len) % len;
+            track.style.transform = `translateX(-${idx * 100}%)`;
+            track.setAttribute('data-index', idx);
+        }
+
+        function addToCartEngine(btn, name, price) {
+            const idx = currentCart.findIndex(i => i.name === name);
+            if (idx > -1) {
+                currentCart.splice(idx, 1);
+                btn.innerHTML = `Book Service <i class="fa-solid fa-arrow-right text-[8px]"></i>`;
+                btn.style.backgroundColor = "#111827";
+            } else {
+                currentCart.push({name, price});
+                btn.innerHTML = `Added to Bag <i class="fa-solid fa-check text-[8px]"></i>`;
+                btn.style.backgroundColor = "#4f46e5";
+            }
+            document.getElementById('cart-count').innerText = currentCart.length;
+        }
+
+        function redirectToFormPage() {
+            if (currentCart.length === 0) { alert("Pehle service select karo!"); return; }
+            localStorage.setItem('hkCart', JSON.stringify(currentCart));
+            window.location.href = 'decor-enquiry.html';
+        }
+    </script>
+
+    <footer class="bg-white border-t pt-20 pb-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            
+            <div class="space-y-6">
+                <p class="heading-font text-3xl font-bold text-gray-900">Star <span class="text-indigo-600 italic">Services</span></p>
+                <p class="text-sm text-gray-500 leading-relaxed font-medium">
+                    Transforming spaces with elegance since 2016. We specialize in custom-stitched curtains and tailored decor solutions for your dream home.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-indigo-600 hover:text-white transition-all"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Explore</h4>
+                <ul class="space-y-4 text-sm font-bold text-gray-500">
+                    <li><a href="index.html" class="hover:text-indigo-600 transition">Home</a></li>
+                    <li><a href="ac-service.html" class="hover:text-indigo-600 transition">AC Services</a></li>
+                    <li><a href="home-decor.html" class="hover:text-indigo-600 transition">Home Decor</a></li>
+                    <li><a href="#contact" class="hover:text-indigo-600 transition">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Decor Catalog</h4>
+                <ul class="space-y-4 text-sm font-bold text-gray-500">
+                    <li><a href="curtains.html" class="hover:text-indigo-600 transition">Premium Curtains</a></li>
+                    <li><a href="blinds.html" class="hover:text-indigo-600 transition">Modern Blinds</a></li>
+                    <li><a href="wallpaper.html" class="hover:text-indigo-600 transition">3D Wallpapers</a></li>
+                    <li><a href="rode.html" class="hover:text-indigo-600 transition">Curtain Rods</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-900 mb-8">Office</h4>
+                <ul class="space-y-4 text-sm font-medium text-gray-500">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-location-dot mt-1 text-indigo-600"></i>
+                        <span>Gurgaon, Haryana</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-phone text-indigo-600"></i>
+                        <span>+91 9315536825</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-envelope text-indigo-600"></i>
+                        <span>info@starservices.com</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-[10px] text-gray-400 uppercase tracking-widest">&copy; 2026 Star Services. Home Solutions & Decor Excellence.</p>
+            <div class="flex gap-6 text-[9px] font-bold uppercase tracking-widest text-gray-400">
+                <a href="#" class="hover:text-gray-900">Privacy Policy</a>
+                <a href="#" class="hover:text-gray-900">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
