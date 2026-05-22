@@ -61,30 +61,45 @@
 </head>
 <body>
 
-    <nav class="fixed w-full top-0 left-0 z-50 bg-white border-b border-gray-100 h-24 flex items-center shadow-sm">
-        <div class="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center">
-            
-            <div class="flex items-center">
-                <div class="heading-font text-3xl font-bold tracking-tight text-gray-900 leading-none">
-                    Star <span class="text-indigo-600 font-normal italic"> Services</span>
-                </div>
-            </div>
-            
-            <ul class="hidden md:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
-                <li><a href="index.html" class="hover:text-indigo-600 transition-colors py-2">HOME</a></li>
-                <li><a href="ac-service.html" class="hover:text-indigo-600 transition-colors py-2">AC SERVICES</a></li>
-                <li><a href="home-decor.html" class="text-indigo-600 border-b-2 border-indigo-600 pb-1">HOME DECOR</a></li>
-            </ul>
-
-            <div class="flex items-center">
-                <button onclick="redirectToFormPage()" class="relative p-2 text-gray-800 hover:scale-110 transition-transform focus:outline-none">
-                    <i class="fa-solid fa-bag-shopping text-2xl"></i>
-                    <span id="cart-count" class="absolute -top-1 -right-1 bg-indigo-600 text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full font-bold border-2 border-white">0</span>
-                </button>
-            </div>
-            
+    <nav class="fixed w-full z-[100] glass-nav h-20 flex items-center">
+    <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
+        
+        <div class="heading-font text-2xl font-bold text-gray-900 tracking-tight">
+            Star <span class="text-indigo-600 font-normal italic"> Services</span>
         </div>
-    </nav>
+        
+        <ul id="menu" class="hidden lg:flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+            <li><a href="index.html" class="hover:text-indigo-600 transition">Home</a></li>
+            <li><a href="home-decor.html" class="hover:text-indigo-600 transition">Home Decor</a></li>
+            <li><a href="#contact" class="hover:text-indigo-600 transition">Contact</a></li>
+        </ul>
+
+        <div class="flex items-center gap-4">
+            <button id="menu-btn" class="lg:hidden p-2 text-gray-900">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+
+            <button onclick="toggleCart(true)" class="relative p-2 text-gray-900">
+                <i class="fa-solid fa-bag-shopping text-2xl"></i>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-indigo-600 text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full font-bold border-2 border-white">0</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div id="mobile-menu" class="hidden fixed top-20 left-0 w-full bg-white p-6 shadow-lg z-[90] flex flex-col gap-4 text-center">
+    <a href="index.html" class="text-gray-900 font-bold uppercase">Home</a>
+    <a href="home-decor.html" class="text-gray-900 font-bold uppercase">Home Decor</a>
+    <a href="#contact" class="text-gray-900 font-bold uppercase">Contact</a>
+</div>
+
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
 
     <main class="max-w-7xl mx-auto px-4 md:px-8 py-32">
         <div class="text-center mb-16">
