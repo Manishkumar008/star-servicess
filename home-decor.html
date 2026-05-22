@@ -20,25 +20,45 @@
 </head>
 <body>
 
-    <!-- 1. NAVIGATION BAR -->
-    <nav class="fixed w-full z-50 glass-nav">
-        <div class="max-w-7xl mx-auto px-4 flex justify-between h-20 items-center">
-            <div class="heading-font text-2xl font-bold text-gray-900 tracking-tight">
-                Star <span class="text-indigo-600 font-normal italic"> Services</span>
-            </div>
-            <ul class="hidden lg:flex gap-10 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-600">
-                <li><a href="index.html" class="hover:text-indigo-600 transition">Home</a></li>
-                <li><a href="ac-service.html" class="hover:text-indigo-600 transition">AC Services</a></li>
-                <li><a href="index.html#contact" class="hover:text-indigo-600 transition">Contact</a></li>
-            </ul>
-            <div class="flex items-center gap-6">
-                <a href="checkout.html" class="relative p-2 text-gray-800">
-                    <i class="fa-solid fa-bag-shopping text-xl"></i>
-                    <span id="cart-count" class="absolute top-0 right-0 bg-indigo-600 text-white text-[9px] px-1.5 py-0.5 rounded-full font-bold">0</span>
-                </a>
-            </div>
+    <nav class="fixed w-full z-[100] glass-nav h-20 flex items-center">
+    <div class="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
+        
+        <div class="heading-font text-2xl font-bold text-gray-900 tracking-tight">
+            Star <span class="text-indigo-600 font-normal italic"> Services</span>
         </div>
-    </nav>
+        
+        <ul id="menu" class="hidden lg:flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+            <li><a href="ac-service.html" class="hover:text-indigo-600 transition">AC Services</a></li>
+            <li><a href="home-decor.html" class="hover:text-indigo-600 transition">Home Decor</a></li>
+            <li><a href="#contact" class="hover:text-indigo-600 transition">Contact</a></li>
+        </ul>
+
+        <div class="flex items-center gap-4">
+            <button id="menu-btn" class="lg:hidden p-2 text-gray-900">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+
+            <button onclick="toggleCart(true)" class="relative p-2 text-gray-900">
+                <i class="fa-solid fa-bag-shopping text-2xl"></i>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-indigo-600 text-white text-[9px] w-5 h-5 flex items-center justify-center rounded-full font-bold border-2 border-white">0</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div id="mobile-menu" class="hidden fixed top-20 left-0 w-full bg-white p-6 shadow-lg z-[90] flex flex-col gap-4 text-center">
+    <a href="index.html" class="text-gray-900 font-bold uppercase">Home</a>
+    <a href="ac-service.html" class="text-gray-900 font-bold uppercase">AC Services</a>
+    <a href="#contact" class="text-gray-900 font-bold uppercase">Contact</a>
+</div>
+
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
 
     <!-- 2. INTERACTIVE HEADER WITH BACKGROUND IMAGE -->
     <section class="relative pt-64 pb-32 text-center px-4 overflow-hidden">
